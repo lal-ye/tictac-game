@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tic Tac Toe 3D</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+</head>
+
+<body>
+	<div id="three-container"></div>
+	<div id="gameContainer" role="application" aria-label="Tic Tac Toe Game">
+		<h1>Tic Tac Toe</h1>
+		<div id="optionsContainer"></div>
+		<div id="status" role="status">Player X's turn</div>
+		<div id="board" role="grid" aria-labelledby="status">
+		</div>
+		<button id="resetButton" aria-label="Reset Game">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+				fill="currentColor">
+				<path
+					d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+				<path
+					d="M16.24 7.76C15.07 6.59 13.58 6 12 6c-3.31 0-6 2.69-6 6 0 .83.17 1.6.44 2.31l1.45-1.45C8.4 11.34 9.15 10 12 10c2.21 0 4 1.79 4 4 0 .66-.16 1.28-.44 1.83l1.52 1.52c.61-.91.96-1.99.96-3.07 0-2.54-1.23-4.76-3.08-6.02z" />
+			</svg>
+		</button>
+	</div>
+
+	<script type="module" src="script.js" defer></script>
+</body>
+
+</html>
