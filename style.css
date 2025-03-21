@@ -1,0 +1,262 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Roboto Mono', monospace; /* Use Roboto Mono */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #1e1e1e; /* Dark gray background */
+    color: #d4d4d4; /* Light gray text */
+}
+
+#three-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#gameContainer {
+    text-align: center;
+    width: 350px;
+    max-width: 90%;
+    padding: 20px;
+    border-radius: 5px; /* Sharper corners */
+    background-color: #2a2a2a; /* Slightly lighter gray container */
+    /* No box-shadow for a flatter look */
+}
+
+h1 {
+    font-family: 'Roboto Mono', monospace; /* Monospace for heading too */
+    color: #ffffff; /* White heading */
+    margin-bottom: 1rem;
+    font-size: 1.8em;
+}
+#status {
+    font-size: 1.2em;
+    color: #d4d4d4;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+
+}
+
+/* Add a class to handle the hidden state */
+#status.hidden {
+    transform: translateY(-20px);
+    opacity: 0;
+}
+#status span {
+    margin-right: 0.5em;
+    font-size: 1.5em;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; /* Smaller gap */
+    margin-bottom: 1rem;
+}
+
+#optionsContainer {
+    display: flex;
+    /* justify-content: space-between;  Removed this */
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 100%;
+    justify-content: center; /* Center the options */
+    gap: 1rem; /* Use gap for spacing */
+}
+
+#optionsContainer select {
+    padding: 8px 12px; /* More specific padding */
+    border-radius: 4px;
+    border: none; /* Remove the default border */
+    background-color: #333333; /* Match cell background */
+    color: #d4d4d4;
+    font-family: 'Roboto Mono', monospace;
+    cursor: pointer;
+    /* margin: 5px;  Removed margin, using gap instead */
+    appearance: none; /* Remove default dropdown arrow (we'll add our own) */
+    -webkit-appearance: none; /* For older browsers */
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16' fill='%23d4d4d4'%3E%3Cpath d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E"); /* Custom dropdown arrow (SVG) */
+    background-repeat: no-repeat;
+    background-position: right 8px center; /* Position the arrow */
+    padding-right: 24px; /* Make space for the arrow */
+    outline: none; /* Remove outline on focus */
+}
+
+#optionsContainer select:hover {
+    background-color: #444444; /* Slightly lighter on hover */
+}
+
+#optionsContainer select:focus {
+    outline: 2px solid #b5e61d; /* Accent color outline on focus */
+    outline-offset: 2px; /* Add some space between outline and element*/
+}
+
+/* Style adjustments to keep layout consistent*/
+
+h1 {
+    margin-bottom: 0.5rem; /* Reduce space below heading*/
+}
+#status{
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #333333; /* Darker cell background */
+    border-radius: 3px; /* Very slight rounding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    font-family: 'Roboto Mono', monospace; /* Monospace for X and O */
+    color: #d4d4d4;
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* Simpler transition */
+    user-select: none;
+    position: relative; /* Important for ripple positioning */
+    overflow: hidden;   /* Clip the ripple to the cell bounds */
+    /* No box-shadow */
+}
+
+/* Inside the .cell class */
+.cell {
+    /* ... existing styles ... */
+    position: relative; /* Important for ripple positioning */
+    overflow: hidden;   /* Clip the ripple to the cell bounds */
+}
+
+/* Add this after the .cell styles */
+.cell::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+    border-radius: 50%; /* Make it circular */
+    transform: translate(-50%, -50%) scale(0); /* Start hidden */
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease; /* Animate size and opacity */
+}
+
+.cell.clicked::after {
+    transform: translate(-50%, -50%) scale(2.5); /* Expand to cover cell */
+    opacity: 1;
+}
+ /* Transition for the ripple disappearing */
+.cell.clicked::after {
+  /* ... existing clicked styles ... */
+  transition: transform 0.4s ease, opacity 0.6s ease 0.4s; /* Delay opacity change */
+  opacity: 0;
+}
+
+.cell:hover {
+    background-color: #444444; /* Slightly lighter on hover */
+    /* No transform on hover */
+}
+
+.cell.winner {
+    background-color: #b5e61d !important; /* Monkeytype's accent color */
+    color: #2a2a2a !important; /* Dark text for contrast */
+    animation: none; /* Remove pulse, keep it simple */
+}
+.cell.X {
+    color: #b5e61d;
+}
+.cell.O {
+   color: #8abeb7; /* A calm blue, a good complement */
+}
+#resetButton {
+    margin-top: 20px;
+    padding: 10px;
+    background: none;
+    border: none;
+    border-radius: 3px; /* Match cell rounding */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    /* No box-shadow */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+#resetButton:hover {
+     background-color: #444444;
+    /* No transform on hover */
+}
+
+#resetButton svg {
+    fill: #d4d4d4; /* Light gray icon */
+    transition: fill 0.2s ease;
+}
+
+#resetButton:hover svg {
+    fill: #b5e61d; /* Accent color on hover */
+}
+
+/* Confetti (Keep, but adjust colors) */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #b5e61d; /* Use accent color */
+    border-radius: 50%;
+    animation: confetti-fall 3s ease-in-out infinite;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2); /* Grow larger */
+    opacity: 0;
+  }
+}
+.cell.explode{
+      animation: explode 0.5s ease-out forwards; /* Apply the animation */
+
+}
+/* Responsive Design */
+@media (max-width: 600px) {
+    #gameContainer {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .cell {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5em;
+    }
+    h1 {
+      font-size: 1.8em;
+    }
+}
